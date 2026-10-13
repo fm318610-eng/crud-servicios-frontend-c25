@@ -10,7 +10,7 @@ import FormularioServicio from "./components/pages/FormularioServicio";
 import ProtectorRutas from "./components/routes/ProtectorRutas";
 import { useEffect, useState } from "react";
 import { AppContext } from "./context/AppContext";
-import type { Servicio } from "./interfaces/servicios";
+
 
 function App() {
   const usuarioSessionStorage = JSON.parse(
