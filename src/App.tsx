@@ -26,6 +26,7 @@ function App() {
   useEffect(() => {
     sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioLogueado));
   }, [usuarioLogueado]);
+  
 
   // useEffect(() => {
   //   localStorage.setItem("serviciosKey", JSON.stringify(servicios));
