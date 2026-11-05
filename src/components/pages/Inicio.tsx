@@ -8,24 +8,24 @@ const Inicio = () => {
   const [cantidadServicios, setCantidadServicios] = useState(0);
 
   useEffect(() => {
+    const consultarAPI = async () => {
+      const respuesta = await listarServicios();
+      if (respuesta?.status === 200) {
+        const datos: ServiciosPaginados = await respuesta.json();
+        setServicios(datos.servicios);
+        setCantidadServicios(datos.cantidadServicios);
+      } else {
+        Swal.fire({
+          title: "Ocurrio un error",
+          text: "No se pudieron obtener los datos",
+          icon: "error",
+        });
+      }
+      //usar la query listarServicios
+    };
     consultarAPI();
   }, []);
 
-  const consultarAPI = async () => {
-    const respuesta = await listarServicios();
-    if (respuesta?.status === 200) {
-      const datos: ServiciosPaginados = await respuesta.json();
-      setServicios(datos.servicios);
-      setCantidadServicios(datos.cantidadServicios);
-    } else {
-      Swal.fire({
-        title: "Ocurrio un error",
-        text: "No se pudieron obtener los datos",
-        icon: "error",
-      });
-    }
-    //usar la query listarServicios
-  };
   return (
     <section className="space-y-8 animate-fadeIn">
       {/* Encabezado con estilo moderno */}

@@ -22,26 +22,25 @@ const FormularioServicio = ({ titulo }: FormularioProps) => {
   const navegacion = useNavigate();
 
   useEffect(() => {
-    obtenerServicio();
-  }, []);
+    const obtenerServicio = async () => {
+      if (titulo.includes("Editar") && id) {
+        const respuesta = await buscarServicioPorId(id);
 
-  const obtenerServicio = async () => {
-    if (titulo.includes("Editar") && id) {
-      const respuesta = await buscarServicioPorId(id);
+        if (respuesta?.status === 200) {
+          const servicioBuscado = await respuesta.json();
 
-      if (respuesta?.status === 200) {
-        const servicioBuscado = await respuesta.json();
-
-        setValue("nombreServicio", servicioBuscado.nombreServicio);
-        setValue("precio", servicioBuscado.precio);
-        setValue("categoria", servicioBuscado.categoria);
-        setValue("descripcion", servicioBuscado.descripcion);
-        setValue("imagen", servicioBuscado.imagen);
-      } else {
-        alert("Ocurrio un error al obtener el servicio buscado");
+          setValue("nombreServicio", servicioBuscado.nombreServicio);
+          setValue("precio", servicioBuscado.precio);
+          setValue("categoria", servicioBuscado.categoria);
+          setValue("descripcion", servicioBuscado.descripcion);
+          setValue("imagen", servicioBuscado.imagen);
+        } else {
+          alert("Ocurrio un error al obtener el servicio buscado");
+        }
       }
-    }
-  };
+    };
+    obtenerServicio();
+  }, [id, titulo, setValue]);
 
   const onSubmit: SubmitHandler<ServicioFormData> = async (data, e) => {
     if (titulo.includes("Crear") && crearServicio) {

@@ -9,21 +9,20 @@ const DetalleServicio = () => {
   const [servicio, setServicio] = useState<Servicio | null>(null);
 
   useEffect(() => {
+    const obtenerServicio = async () => {
+      if (!id) {
+        // Si no existe el servicio, redirigir a 404
+        navigate("/404", { replace: true });
+      } else {
+        const respuesta = await buscarServicioPorId(id);
+        if (respuesta?.status === 200) {
+          const datos = await respuesta.json();
+          setServicio(datos);
+        }
+      }
+    };
     obtenerServicio();
   }, [id, navigate]);
-
-  const obtenerServicio = async () => {
-    if (!id) {
-      // Si no existe el servicio, redirigir a 404
-      navigate("/404", { replace: true });
-    } else {
-      const respuesta = await buscarServicioPorId(id);
-      if (respuesta?.status === 200) {
-        const datos = await respuesta.json();
-        setServicio(datos);
-      }
-    }
-  };
 
   if (!servicio) {
     return null;
