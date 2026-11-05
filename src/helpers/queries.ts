@@ -2,9 +2,32 @@ import type { Servicio } from "../interfaces/servicios";
 
 const urlServicios = import.meta.env.VITE_SERVICIOS + "/servicios";
 
-export const listarServicios = async () => {
+interface ParametrosListadoServicios {
+  termino?: string;
+  pagina?: number;
+  limite?: number;
+}
+
+export const listarServicios = async (
+  parametros: ParametrosListadoServicios = {},
+) => {
   try {
-    const respuesta = await fetch(urlServicios);
+    const parametrosBusqueda = new URLSearchParams();
+
+    if (parametros.termino) {
+      parametrosBusqueda.append("termino", parametros.termino);
+    }
+    if (parametros.pagina !== undefined) {
+      parametrosBusqueda.append("pagina", parametros.pagina.toString());
+    }
+    if (parametros.limite !== undefined) {
+      parametrosBusqueda.append("limite", parametros.limite.toString());
+    }
+
+    const consulta = parametrosBusqueda.toString();
+    const respuesta = await fetch(
+      consulta ? `${urlServicios}?${consulta}` : urlServicios,
+    );
     return respuesta;
   } catch (error) {
     console.error(error);

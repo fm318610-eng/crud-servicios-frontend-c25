@@ -13,5 +13,4 @@ export interface ServiciosPaginados {
   servicios: Servicio[];
   cantidadServicios: number;
   paginaActual: number;
-  totalPaginas: number;
 }
