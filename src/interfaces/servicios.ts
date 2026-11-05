@@ -8,3 +8,10 @@ export interface Servicio {
 }
 
 export type ServicioFormData = Omit<Servicio, 'id'>;
+
+export interface ServiciosPaginados {
+  servicios: Servicio[];
+  cantidadServicios: number;
+  paginaActual: number;
+  totalPaginas: number;
+}

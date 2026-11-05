@@ -4,7 +4,7 @@ import { LuCirclePlus } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { listarServicios } from "../../helpers/queries";
 import Swal from "sweetalert2";
-import type { Servicio } from "../../interfaces/servicios";
+import type { Servicio, ServiciosPaginados } from "../../interfaces/servicios";
 const Administrador = () => {
   const [servicios, setServicios] = useState<Servicio[]>([]);
 
@@ -15,8 +15,8 @@ const Administrador = () => {
   const consultarAPI = async () => {
     const respuesta = await listarServicios();
     if (respuesta?.status === 200) {
-      const datos = await respuesta.json();
-      setServicios(datos);
+      const datos: ServiciosPaginados = await respuesta.json();
+      setServicios(datos.servicios);
     } else {
       Swal.fire({
         title: "Ocurrio un error",

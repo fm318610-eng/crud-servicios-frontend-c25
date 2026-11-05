@@ -2,9 +2,10 @@ import CardServicio from "../services/CardServicio";
 import { useEffect, useState } from "react";
 import { listarServicios } from "../../helpers/queries";
 import Swal from "sweetalert2";
-import type { Servicio } from "../../interfaces/servicios";
+import type { Servicio, ServiciosPaginados } from "../../interfaces/servicios";
 const Inicio = () => {
   const [servicios, setServicios] = useState<Servicio[]>([]);
+  const [cantidadServicios, setCantidadServicios] = useState(0);
 
   useEffect(() => {
     consultarAPI();
@@ -13,8 +14,9 @@ const Inicio = () => {
   const consultarAPI = async () => {
     const respuesta = await listarServicios();
     if (respuesta?.status === 200) {
-      const datos = await respuesta.json();
-      setServicios(datos);
+      const datos: ServiciosPaginados = await respuesta.json();
+      setServicios(datos.servicios);
+      setCantidadServicios(datos.cantidadServicios);
     } else {
       Swal.fire({
         title: "Ocurrio un error",
@@ -38,7 +40,7 @@ const Inicio = () => {
         </div>
 
         <div className="text-xs text-zinc-500 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800 self-start md:self-center">
-          {servicios.length} servicios disponibles
+          {cantidadServicios} servicios disponibles
         </div>
       </div>
 
