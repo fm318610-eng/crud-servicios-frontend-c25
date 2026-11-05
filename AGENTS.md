@@ -75,7 +75,6 @@ Interface en `src/interfaces/servicios.ts`:
 
 ## Convenciones
 
-
 - **Español** en UI, nombres de archivos, funciones y variables
   (`nombreServicio`, `usuarioLogueado`, `consultarAPI`, `navegacion`).
   No traducir identificadores existentes.
